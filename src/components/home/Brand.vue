@@ -12,6 +12,7 @@
 </template>
 
 <script>
+  import {mapMutations} from 'vuex'
   export default{
     name:'brandlist',
     props:['brandList'],
@@ -19,11 +20,13 @@
       return {}
     },
     methods:{
+      ...mapMutations({
+        isShowtb:'home/changeTabBar'
+      }),
       changeBrand(idx){
         var list = this._props.brandList
         var obj = list[idx]
-        // obj.brand = list[idx]
-        this.$store.commit('changeTabBar',false)
+        this.isShowtb(false)
         this.$router.push({name:'branddetail',params:{id:obj.id}})
 
       }

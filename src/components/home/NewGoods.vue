@@ -12,6 +12,7 @@
 </template>
 
 <script>
+	import {mapMutations} from 'vuex'
   export default{
     name:'newgoods',
     props:['newgoods'],
@@ -19,9 +20,12 @@
       return {}
     },
     methods:{
+			...mapMutations({
+				isShowtb:'home/changeTabBar'
+			}),
       changeGood(idx){
          var id = this._props.newgoods[idx].id
-         this.$store.commit('changeTabBar',false)
+				 this.isShowtb(false)
          this.$router.push('/goodsdetail/'+ id)
       }
     }

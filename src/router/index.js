@@ -71,13 +71,13 @@ const router = new Router({
 router.beforeEach((to, from, next)=>{
   // 用户进入首页，必须关掉popup的背景
   if(to.name == 'popup'){
-    store.commit('changeTabBar',false)
+    // store.commit('changeTabBar',false)
     setTimeout(function(){
-      store.commit('changeContent',false)
+      // store.commit('changeContent',false)
 
     },400)
   }else if(to.name == 'home'){
-    store.commit('changeTabBar',true)
+    // store.commit('changeTabBar',true)
   }
 
   next();

@@ -2,15 +2,14 @@
   <div class="home">
     <div>
       <transition name="shade">
-        <div class="popup-bg" v-if="$store.state.shade"></div>
+        <div class="popup-bg" v-if="$store.state.home.shade"></div>
       </transition>
       <transition name="fade">
         <router-view></router-view>
       </transition>
     </div>
 
-
-    <div v-if="$store.state.content">
+    <div v-if="$store.state.home.content">
       <van-search v-model="value" disabled shape="round" placeholder="请输入搜索关键词" @click="ToPopup" />
       <!-- 轮播组件 -->
       <my-swipe :swipe="swipe"></my-swipe>
@@ -36,6 +35,7 @@
     Getspecial,
     GetBrand
   } from '@/request/api.js'
+  import { mapMutations }  from 'vuex'
   import mySwipe from '@/components/home/Swipe.vue'
   import channel from '@/components/home/Channel.vue'
   import brandList from '@/components/home/Brand.vue'
@@ -67,7 +67,7 @@
       special,
       category
     },
-    created() {
+    mounted() {
       GetHomeData().then((res) => {
         console.log(res)
         let { ...data
@@ -82,13 +82,18 @@
       })
     },
     methods: {
+      ...mapMutations({
+        isShowtb:'home/changeTabBar',
+        isShowsd:'home/changeShade',
+        isShowct:'home/changeContent'
+      }),
       ToPopup() {
         this.$router.push('/home/popup')
-        this.$store.commit('changeShade',true)
-        this.$store.commit('changeTabBar',false)
+        this.isShowtb(false)
+        this.isShowsd(true)
         setTimeout(()=>{
-          this.$store.commit('changeContent',false)
-        },300)
+          this.isShowct(false)
+        },400)
       }
     },
 

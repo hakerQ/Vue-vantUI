@@ -38,10 +38,6 @@
         this.active = idx
       }
     },
-    mounted() {
-      this.$store.commit('changeTabBar', false)
-    },
-
     methods: {
       changeTab(index) {
         var idArr = this.getTabId()

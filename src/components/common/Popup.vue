@@ -78,6 +78,7 @@
 </template>
 
 <script>
+	import {mapMutations} from 'vuex'
   import {GetSearch,GetClearHis,GetSearchHelper,GetGoods} from '@/request/api.js'
   import {Toast} from 'vant'
   import dropdown from './Dropdown.vue'
@@ -113,6 +114,12 @@
 
     },
     methods:{
+			...mapMutations({
+			  isShowtb:'home/changeTabBar',
+			  isShowsd:'home/changeShade',
+			  isShowct:'home/changeContent'
+			}),
+
       getGoodslist(data){
         this.isDropdown = true
         GetGoods(data).then((res) => {
@@ -188,9 +195,9 @@
       //取消，返回上一层
       cancel(){
         this.$router.back()
-        this.$store.commit('changeShade',false)
-        this.$store.commit('changeContent', true)
-        this.$store.commit('changeTabBar', true)
+        this.isShowsd(false)
+        this.isShowct(true)
+        this.isShowtb(true)
       },
       onDelete(){
         GetClearHis().then((res) => {

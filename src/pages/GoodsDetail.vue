@@ -65,7 +65,7 @@
     </div>
 
     <transition name="fade">
-      <model v-if="$store.state.isModel" :goods-info="goodsInfo"></model>
+      <model v-if="$store.state.goodsdetail.isModel" :goods-info="goodsInfo"></model>
     </transition>
 
 
@@ -81,6 +81,7 @@
 
 <script>
   import {GetGoodsDetail,GetGoodsRelated} from '@/request/api.js'
+	import {mapState, mapMutations } from 'vuex'
   import model from '@/components/goodsdetail/Model'
   export default{
     name:'goodsdetail',
@@ -115,11 +116,20 @@
           this.goodsLook = res.data.goodsList
         }
       })
-      this.$store.commit('changeTabBar',false)
+      this.isShowtb(false)
     },
     methods:{
-      openModel(e){
-        this.$store.commit('changeModel',true)
+      ...mapState('goodsdetail',{
+        isModel:state => state.isModel,
+        goodsCount:state => state.goodsCount
+      }),
+			...mapMutations({
+				isShowModel:'goodsdetail/changeModel',
+				addGoods:'goodsdetail/addGoods',
+        isShowtb:'home/changeTabBar'
+			}),
+      openModel(){
+				this.isShowModel(true)
       },
       changeGood(id){
         GetGoodsDetail({id}).then(res=>{
@@ -132,20 +142,20 @@
         })
       },
       addCar(){
-         var bool = this.$store.state.isModel
+         var bool = this.isModel()
          if(!bool){
-           this.$store.commit('changeModel',true)
+					 this.isShowModel(true)
          }else{
-           this.$store.commit('changeModel',false)
-          var cou = Number(this.$store.state.goodsCount)  //要添加的数量
+					 this.isShowModel(false)
+          var cou = Number(this.goodsCount())  //要添加的数量
           if(this.num == ''){ //如果没有添加商品
             this.num = cou
-            this.$store.commit('addGoods', this.num)  //存为总数量
+						this.addGoods(this.num)  //存为总数量
           }else{
             var all = Number(localStorage.getItem('num'))
             all += cou
             this.num = all
-            this.$store.commit('addGoods',all)
+						this.addGoods(all)
           }
          }
       },

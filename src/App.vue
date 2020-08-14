@@ -3,7 +3,7 @@
     <router-view v-if="isRouterAlive"/>
 
      <transition name="fade">
-       <tab-bar v-if="$store.state.tabBar"></tab-bar>
+       <tab-bar v-if="$store.state.home.tabBar"></tab-bar>
      </transition>
 
 
@@ -27,6 +27,9 @@ export default {
   },
   components:{
     tabBar
+  },
+  mounted() {
+    console.log(this.$store.state.home.tabBar)
   },
   methods:{
     reload(){

@@ -13,18 +13,22 @@
 </template>
 
 <script>
-
+  import {mapMutations} from 'vuex'
   export default{
     name:'channel',
     props:['channel'],
     data(){
       return {}
     },
-    
+
     methods:{
+			...mapMutations({
+				isShowcc:'home/cut_channel',
+				isShowtb:'home/changeTabBar'
+			}),
       onChannel(id){
-        this.$store.commit('cut_channel',id)
-        this.$store.commit('changeTabBar',false)
+        this.isShowcc(id)
+        this.isShowtb(false)
         this.$router.push({path:'/channels/' + id})
       }
     }

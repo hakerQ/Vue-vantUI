@@ -30,7 +30,6 @@
       onChange(index){
         this.$router.push({path:'/'+index})
       }
-
     }
   }
 </script>

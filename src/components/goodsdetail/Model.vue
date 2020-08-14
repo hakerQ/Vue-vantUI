@@ -12,24 +12,26 @@
       </div>
       <div class="count">
         <h4>数量:</h4>
-        <van-stepper v-model.number="$store.state.goodsCount" integer @change = "onChange"/>
+        <van-stepper v-model.number="$store.state.goodsdetail.goodsCount" integer @change = "onChange"/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import { mapMutations } from 'vuex'
   export default{
     name:'model',
     props:['goodsInfo'],
     data(){
-      return {
-
-      }
+      return {}
     },
     methods:{
+      ...mapMutations({
+        isShowModel:'goodsdetail/changeModel'
+      }),
       onClose(){
-         this.$store.commit('changeModel',false)
+         this.isShowModel(false)
       },
       onChange(){
         // console.log('----------',this.$store.state.goodsCount)
